@@ -1,0 +1,99 @@
+{
+  "info": {
+    "name": "SaadRimeh API",
+    "_postman_id": "saadrimeh-api-collection",
+    "description": "Postman collection for the backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api/v1" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loginCode\": \"<loginCode or phone>\",\n  \"password\": \"<password if set>\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth","login"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Secretary",
+      "item": [
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"John Doe\",\n  \"phone\": \"+1234567890\",\n  \"age\": 17,\n  \"parentPhone\": \"+1987654321\",\n  \"courses\": [],\n  \"password\": \"secret123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/secretary/students", "host": ["{{baseUrl}}"], "path": ["secretary","students"] }
+          }
+        },
+        {
+          "name": "Get Students",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/secretary/students", "host": ["{{baseUrl}}"], "path": ["secretary","students"] } }
+        },
+        {
+          "name": "Get Student By ID",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/secretary/students/:studentId", "host": ["{{baseUrl}}"], "path": ["secretary","students",":studentId"] } }
+        },
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" },{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Math 101\",\n  \"description\": \"Basic math\",\n  \"teacherId\": \"<teacherId>\",\n  \"price\": 100\n}" },
+            "url": { "raw": "{{baseUrl}}/secretary/courses", "host": ["{{baseUrl}}"], "path": ["secretary","courses"] }
+          }
+        },
+        {
+          "name": "Register Student In Course",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" },{ "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"studentId\": \"<studentId>\"\n}" }, "url": { "raw": "{{baseUrl}}/secretary/courses/:courseId/register-student", "host": ["{{baseUrl}}"], "path": ["secretary","courses",":courseId","register-student"] } }
+        },
+        {
+          "name": "Create Appointment",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" },{ "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"courseId\": \"<courseId>\",\n  \"teacherId\": \"<teacherId>\",\n  \"date\": \"2025-12-24T10:00:00.000Z\",\n  \"durationMinutes\": 60,\n  \"notes\": \"Intro class\"\n}" }, "url": { "raw": "{{baseUrl}}/secretary/appointments", "host": ["{{baseUrl}}"], "path": ["secretary","appointments"] } }
+        },
+        {
+          "name": "Upsert Finance",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" },{ "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"totalDue\": 200,\n  \"notes\": \"Semester fees\"\n}" }, "url": { "raw": "{{baseUrl}}/secretary/finance/:studentId", "host": ["{{baseUrl}}"], "path": ["secretary","finance",":studentId"] } }
+        }
+      ]
+    },
+    {
+      "name": "Teacher",
+      "item": [
+        { "name": "Get Appointments", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/teacher/appointments", "host": ["{{baseUrl}}"], "path": ["teacher","appointments"] } } },
+        { "name": "Get Students In Course", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/teacher/courses/:courseId/students", "host": ["{{baseUrl}}"], "path": ["teacher","courses",":courseId","students"] } } },
+        { "name": "Record Attendance", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" },{ "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"appointmentId\": \"<appointmentId>\",\n  \"records\": [ { \"studentId\": \"<studentId>\", \"present\": true, \"note\": \"On time\" } ]\n}" }, "url": { "raw": "{{baseUrl}}/teacher/attendance", "host": ["{{baseUrl}}"], "path": ["teacher","attendance"] } } }
+      ]
+    },
+    {
+      "name": "Student",
+      "item": [
+        { "name": "Get Courses", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/student/courses", "host": ["{{baseUrl}}"], "path": ["student","courses"] } } },
+        { "name": "Get Appointments", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/student/appointments", "host": ["{{baseUrl}}"], "path": ["student","appointments"] } } },
+        { "name": "Get Finance", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": { "raw": "{{baseUrl}}/student/finance", "host": ["{{baseUrl}}"], "path": ["student","finance"] } } }
+      ]
+    }
+  ]
+}
