@@ -1,4 +1,4 @@
-# ![Node.js](https://img.shields.io/badge/Node.js-16+-green) School Management Backend API ![License](https://img.shields.io/badge/License-MIT-blue)
+# ![Node.js](https://img.shields.io/badge/Node.js-16+-green) A+ Management Backend API ![License](https://img.shields.io/badge/License-MIT-blue)
 
 **Professional REST API for managing students, teachers, courses, appointments, attendance, and finance.**
 
